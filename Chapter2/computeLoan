@@ -1,0 +1,40 @@
+import javax.swing.JOptionPane;
+
+public class ComputeLoan {
+    public static void main(String[] args){
+        //enter yearly increase rate
+        String annualInterestRateString = JOptionPane.showInputDialog(null,"Enter Yearly interest rate, for example : 8.25",
+                "Example 2.2 input ",JOptionPane.QUESTION_MESSAGE);
+
+        //convert string to double
+        double annualInterestRate = Double.parseDouble(annualInterestRateString);
+
+        //obtain monthly interest rate
+        double monthlyInterestRate = annualInterestRate / 1200;
+
+        //enter number of years
+        String numberOfYearsString = JOptionPane.showInputDialog(null,"enter year number","Example 2.2 input year number",JOptionPane.QUESTION_MESSAGE);
+
+        //convert years to int
+        int numberOfYears = Integer.parseInt(numberOfYearsString);
+
+        //enter loan amount
+        String loanString = JOptionPane.showInputDialog(null,"Enter loan amount, for example 120000.00","Example 2.2 input loan amount",JOptionPane.QUESTION_MESSAGE);
+
+        //convert loan to double
+        Double loan = Double.parseDouble(loanString);
+
+        //calc payment
+        double monthlyPayment = loan * monthlyInterestRate / (1 - 1/Math.pow(1 + monthlyInterestRate,numberOfYears * 12));
+        double totalPayment = monthlyPayment * numberOfYears * 12;
+
+        //format to keep two digits after the decimal point
+        monthlyPayment = (int)(monthlyPayment * 100) / 100.0;
+        totalPayment = (int)(totalPayment * 100) / 100.0;
+
+        //Display
+        //String output = JOptionPane.showMessageDialog(null,"the monthly payment is " + monthlyPayment + "the totalPayment is " + totalPayment,"Example output 2.2 totalpayment",JOptionPane.INFORMATION_MESSAGE);
+        String output = "The monthlyPayment is " + monthlyPayment + " the totalPayment is " + totalPayment;
+        JOptionPane.showMessageDialog(null,output,"Example 2.3 totalpayment",JOptionPane.INFORMATION_MESSAGE);
+    }
+}
