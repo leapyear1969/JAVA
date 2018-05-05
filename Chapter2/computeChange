@@ -1,0 +1,56 @@
+/**
+ * 编写一个程序，把给定的钱分成较小的货币，程序要求用户输入一个双精度的数代表总元数（精确到分）
+ * 然后列出与其叠加的yuan1元，quarter5角，half2角，dime1角，nickel5分，penny1分的数目
+ *1.52 = 1 + 0.5 + 0.02
+ *9.87 = 9*1 + 0.5 + 0.2 + 0.1 + 0.05 + 0.01*2
+ *10.23 = 10*1 + 0.2 + 0.01*3
+ * **/
+import javax.swing.JOptionPane;
+import java.text.DecimalFormat;
+
+public class ComputeChange {
+    public static void main(String[] args){
+        DecimalFormat df2 = new DecimalFormat("#.00");
+        String inputMoneyString = JOptionPane.showInputDialog(null,"please enter your money amount","input Money Box",JOptionPane.INFORMATION_MESSAGE);
+        //convert string to double
+        double inputMoney = Double.parseDouble(inputMoneyString);
+
+        //calc yuan amount
+        int yuan = (int)inputMoney;
+
+        //calc reset amount
+        double resetMoney = inputMoney - ((double)yuan);
+        System.out.println("出去1元的钱数，剩余" + resetMoney);
+
+        //calc quarter
+        double quarterDouble = resetMoney / 0.50;
+        int quarter = (int)quarterDouble;
+//        System.out.println("5角的个数"+ (int)quarter);
+//        System.out.println(quarter);
+
+        //calc half
+        double resetHalfDouble = (resetMoney - (quarter*0.50)) / 0.20;
+        int resetHalf = (int)resetHalfDouble;
+        System.out.println("除去1块和5角，剩余的钱" + (resetMoney - (quarter*0.50)));
+
+        //calc dime
+        double resetDimeDouble = (resetMoney - (quarter*0.50) - (resetHalf*0.20)) / 0.10;
+        int resetDime = (int)resetDimeDouble;
+        System.out.println("出去1元，5角，2角，剩余的钱" + df2.format(resetMoney - (quarter*0.50) - (resetHalf*0.20)));
+        //System.out.println(resetDime);
+
+        //calc nickel
+        double nickelDf2 = Double.parseDouble(df2.format(resetMoney - (quarter*0.50) - (resetHalf*0.20) - (resetDime*0.10)));
+        double resetNickelDouble = (nickelDf2) / 0.05;
+        int resetNickel = (int)resetNickelDouble;
+        //System.out.println(df2.format(resetMoney - (quarter*0.50) - (resetHalf*0.20) - (resetDime*0.10)));
+        //System.out.println(nickelDf2);
+
+        //calc penny
+        double resetPennyDouble = (resetMoney - (quarter*0.50) - (resetHalf*0.20) - (resetDime*0.10) - (resetNickel*0.05)) / 0.01;
+        int resetPenny = (int)resetPennyDouble;
+
+        String outPut = "您的钱是由" + yuan +"个1元，" + (int)quarter + "个5角，" + (int)resetHalf + "个2角，" + (int)resetDime + "个1角，" + (int)resetNickel + "个5分，" + (int)resetPenny + "个1分组成";
+        JOptionPane.showMessageDialog(null,outPut,"outPut",JOptionPane.INFORMATION_MESSAGE);
+    }
+}
